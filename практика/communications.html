@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>АМС және Мачталар - Ақмола облысы</title>
+  <link rel="icon" type="image/png" href="png/Digetal_Aqmola.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body>
+<div class="app-wrapper">
+  <header class="top-tabs">
+    <div class="header-logo">
+      <img src="png/Digetal_Aqmola.png" alt="Logo" class="header-logo-img">
+      <span class="app-brand-name">Жүйе</span>
+    </div>
+    <a href="dashboard.html" class="top-tab active" data-tab="main">Сотовая</a>
+    <a href="dashboard.html?mode=tourism" class="top-tab" data-tab="tourism">Туризм</a>
+    <a href="dashboard.html?mode=project" class="top-tab" data-tab="project">НацПроект</a>
+    <div class="header-profile">
+      <div class="header-avatar">А</div>
+      <div class="header-profile-text">
+        <div class="header-user">Админ</div>
+        <div class="header-role">Әкімші</div>
+      </div>
+    </div>
+  </header>
+
+  <div class="main-body-v2">
+    <aside class="sidebar-v2">
+      <div class="sidebar-category" data-cat="mobile">
+        <svg viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg>
+        Сотовая
+      </div>
+      <div class="sidebar-category" data-cat="internet">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg>
+        Интернет / ШПД
+      </div>
+      <div class="sidebar-category active" data-cat="masts">
+        <svg viewBox="0 0 24 24"><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/></svg>
+        АМС / мачты
+      </div>
+    </aside>
+
+    <main class="map-workspace">
+      <div class="filter-controls">
+        <div class="filter-box">
+          <div class="filter-box-title">Технология</div>
+          <div class="filter-grid" id="tech-chips-container">
+          </div>
+        </div>
+        
+        <div class="filter-box">
+          <div class="filter-box-title">Оператор</div>
+          <div id="operator-container">
+            <select class="filter-select" id="operator-filter">
+              <option value="all">Барлығы</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="map-container-v2">
+        <div id="leaflet-map"></div>
+        <div class="static-info-panel" id="infoPanel">
+          <div class="info-panel-header">
+            <div class="info-panel-title">Нүкте мәліметтері</div>
+            <div class="info-close-btn" onclick="hideInfoPanel()">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+            </div>
+          </div>
+          <div id="infoContent">
+            <div class="info-content-placeholder">Таңдаңыз</div>
+          </div>
+        </div>
+      </div>
+      <div id="aiChatOverlay" class="u-hidden"></div>
+    </main>
+
+    <aside class="sidebar-ai">
+      <div class="ai-chat-banner">
+        <div class="ai-chat-header">
+          <svg viewBox="0 0 24 24" class="ai-icon" aria-hidden="true"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-1H1a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73A2 2 0 1 1 12 2zm-1 8H7a5 5 0 0 0-4.99 4.88L2 15h18l-.01-.12A5 5 0 0 0 15 10A5 5 0 0 0 11 10zM8 13v2H6v-2h2zm8 0v2h-2v-2h2z"></path></svg>
+          <div class="ai-chat-title">AI Көмекші</div>
+        </div>
+        <div class="ai-chat-input-wrapper">
+          <input type="text" id="ai-chat-input" placeholder="Сұрақ қойыңыз..." autocomplete="off">
+          <button type="button" class="ai-chat-submit">Сұрау</button>
+        </div>
+        <div id="ai-chat-response" class="ai-chat-response" hidden></div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="js/config.js"></script>
+<script src="js/app-common.js"></script>
+<script src="js/communications.js"></script>
+</body>
+</html>
